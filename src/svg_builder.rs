@@ -7,7 +7,7 @@ use palette::{Srgb, Pixel};
 
 #[derive(Debug, PartialEq)]
 pub struct CreateError {
-    msg: &'static str
+    pub msg: &'static str
 }
 
 impl Display for CreateError {

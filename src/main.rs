@@ -34,6 +34,6 @@ fn main() {
         Ok(()) => println!(
             "SVG is available in root folder. Thank you very much, have a nice day. <3"
         ),
-        Err(e) => println!("Uh oh, something went wrong: {}", e),
+        Err(e) => println!("Uh oh, something went wrong: {} Specifically: {}", e, e.msg),
     }
 }
