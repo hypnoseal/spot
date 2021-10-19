@@ -1,0 +1,18 @@
+[package]
+name = "spot"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "spot"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+svg = "0.10.0"
+palette = {version = "0.6.0", features = ["random"]}
+rand = "0.8.4"
