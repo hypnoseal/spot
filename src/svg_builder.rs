@@ -53,7 +53,7 @@ impl Spots {
     }
 }
 
-pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<(), CreateError> {
+pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, CreateError> {
     if spots.get_num_spots() == 0 {
         return Err(CreateError { msg: "The number of spots cannot be 0." })
     }
@@ -107,7 +107,6 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<(), CreateE
         .set("width", "100%")
         .set("height", "100%")
         .add(circles);
-
     svg::save("art.svg", &art_piece).unwrap();
-    Ok(())
+    Ok(art_piece.to_string())
 }

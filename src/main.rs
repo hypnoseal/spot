@@ -12,10 +12,10 @@ fn rand_num() -> f32 {
 fn main() {
     // Edit the number of dots by changing the integer num_spots to another perfect square. If not a
     // square it will complain.
-    let num_spots = 16;
+    let num_spots = 81;
     // Change the margin here. Must be an f32 (include the decimal 1.0 for example). Margin must be
     // less than half of `dimension`.
-    let margin = 10.0;
+    let margin = 5.0;
     // Change the dimension of the SVG, this modifies the `viewBox` of the SVG. I suggest leaving it
     // alone for now.
     let dimension = 100;
@@ -31,8 +31,9 @@ fn main() {
 
     let output = svg_builder::create(spots, dimension, margin);
     match output {
-        Ok(()) => println!(
-            "SVG is available in root folder. Thank you very much, have a nice day. <3"
+        Ok(art) => println!(
+            "SVG is available in root folder. Thank you very much, have a nice day. <3\nThe SVG code is:\n{}",
+            art
         ),
         Err(e) => println!("Uh oh, something went wrong: {} Specifically: {}", e, e.msg),
     }
