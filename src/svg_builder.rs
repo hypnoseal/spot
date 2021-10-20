@@ -43,8 +43,8 @@ impl Spots {
         num_spots_sqrt % 1.0 == 0.0
     }
 
-    fn get_spot_color(&self, row: usize, col: usize, rgb: RgbMatch) -> u8 {
-        let raw_color: [u8; 3] = Srgb::into_raw(self.spots[row * col - 1].color.into_format());
+    fn get_spot_color(&self, n: usize, rgb: RgbMatch) -> u8 {
+        let raw_color: [u8; 3] = Srgb::into_raw(self.spots[n].color.into_format());
         match rgb {
             RgbMatch::Red => raw_color[0],
             RgbMatch::Green => raw_color[1],
@@ -67,12 +67,9 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<(), CreateE
             msg: "Margin cannot be greater than half of dimension. Mathematically: margin > (dimension / 2)"
         })
     }
-    let canvas_height: usize = dimension;
-    let canvas_width: usize = dimension;
-    let margin: f32 = margin;
     let num_spots: usize = spots.get_num_spots();
     let sqrt_spots: f32 = (num_spots as f64).sqrt() as f32;
-    let radius: f32 = (canvas_width as f32 - 2.0 * margin) / (sqrt_spots * 4.0);
+    let radius: f32 = (dimension as f32 - 2.0 * margin) / (sqrt_spots * 4.0);
     let spacing: f32 = 4.0 * radius;
     println!("Spacing is {}", spacing);
     let mut pos_x: f32 = margin + 2.0 * radius;
@@ -80,14 +77,14 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<(), CreateE
     let mut col: usize = 1;
     let mut row: usize = 1;
     let mut circles = Group::new();
-    for n in 1..num_spots+1 {
+    for n in 0..num_spots {
         let color = format!(
             "rgb({}, {}, {})",
-            spots.get_spot_color(row, col, RgbMatch::Red),
-            spots.get_spot_color(row, col, RgbMatch::Green),
-            spots.get_spot_color(row, col, RgbMatch::Blue)
+            spots.get_spot_color(n, RgbMatch::Red),
+            spots.get_spot_color(n, RgbMatch::Green),
+            spots.get_spot_color(n, RgbMatch::Blue)
         );
-        println!("Spot {}: pos_x {}, pos_y {}, col {}, row {}", n, pos_x, pos_y, col, row);
+        println!("Spot {}: pos_x {}, pos_y {}, col {}, row {}", n + 1, pos_x, pos_y, col, row);
         let circle = Circle::new()
             .set("cx", pos_x)
             .set("cy", pos_y)
@@ -106,7 +103,7 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<(), CreateE
     }
 
     let art_piece = Document::new()
-        .set("viewBox", (0, 0, canvas_width, canvas_height))
+        .set("viewBox", (0, 0, dimension, dimension))
         .set("width", "100%")
         .set("height", "100%")
         .add(circles);
