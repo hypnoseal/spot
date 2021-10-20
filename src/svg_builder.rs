@@ -84,7 +84,7 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, Cre
             spots.get_spot_color(n, RgbMatch::Green),
             spots.get_spot_color(n, RgbMatch::Blue)
         );
-        println!("Spot {}: pos_x {}, pos_y {}, col {}, row {}", n + 1, pos_x, pos_y, col, row);
+        println!("Spot {}: pos_x {}, pos_y {}, col {}, row {}, color: {}", n + 1, pos_x, pos_y, col, row, color);
         let circle = Circle::new()
             .set("cx", pos_x)
             .set("cy", pos_y)

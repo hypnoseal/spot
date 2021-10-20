@@ -32,7 +32,7 @@ fn main() {
     let output = svg_builder::create(spots, dimension, margin);
     match output {
         Ok(art) => println!(
-            "SVG is available in root folder. Thank you very much, have a nice day. <3\nThe SVG code is:\n{}",
+            "SVG is available in root folder. Thank you very much, have a nice day. <3\nThe SVG code is:\n\n{}",
             art
         ),
         Err(e) => println!("Uh oh, something went wrong: {} Specifically: {}", e, e.msg),
