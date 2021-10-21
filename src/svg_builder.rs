@@ -4,6 +4,8 @@ use svg::{Document, Node};
 use svg::node::element::Circle;
 use svg::node::element::Group;
 use palette::{Srgb, Pixel};
+use rand::Rng;
+
 
 #[derive(Debug, PartialEq)]
 pub struct CreateError {
@@ -71,12 +73,12 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, Cre
     let sqrt_spots: f32 = (num_spots as f64).sqrt() as f32;
     let radius: f32 = (dimension as f32 - 2.0 * margin) / (sqrt_spots * 4.0);
     let spacing: f32 = 4.0 * radius;
-    println!("Spacing is {}", spacing);
     let mut pos_x: f32 = margin + 2.0 * radius;
     let mut pos_y: f32 = margin + 2.0 * radius;
     let mut col: usize = 1;
     let mut row: usize = 1;
     let mut circles = Group::new();
+    println!("Spot Artwork Generated!");
     for n in 0..num_spots {
         let color = format!(
             "rgb({}, {}, {})",
@@ -107,6 +109,22 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, Cre
         .set("width", "100%")
         .set("height", "100%")
         .add(circles);
-    svg::save("art.svg", &art_piece).unwrap();
     Ok(art_piece.to_string())
+}
+
+fn rand_num() -> f32 {
+    let mut rng = rand::thread_rng();
+    rng.gen_range(0.0..1.0)
+}
+
+pub fn create_random_spot(num_spots: usize, dimension: usize, margin: f32) -> Result<String, CreateError> {
+    let mut spots_vec = Vec::new();
+    for _ in 0..num_spots {
+        spots_vec.push(Spot {
+            color: Srgb::new(rand_num(), rand_num(), rand_num()),
+            pointer: false
+        })
+    }
+    let spots = Spots { spots: spots_vec };
+    Ok(create(spots, dimension, margin).unwrap())
 }
