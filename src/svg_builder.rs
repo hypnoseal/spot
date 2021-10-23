@@ -1,10 +1,13 @@
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 use svg::{Document, Node};
-use svg::node::element::Circle;
+use svg::node::element::{Circle, SVG};
 use svg::node::element::Group;
 use palette::{Srgb, Pixel};
 use rand::Rng;
+use web_sys::Node as WebNode;
+use yew::Html;
+use yew::virtual_dom::VNode;
 
 
 #[derive(Debug, PartialEq)]
@@ -55,7 +58,31 @@ impl Spots {
     }
 }
 
-pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, CreateError> {
+pub struct SpotsArt {
+    art: SVG
+}
+
+impl SpotsArt {
+    pub fn new(art: SVG) -> SpotsArt {
+        SpotsArt {
+            art
+        }
+    }
+
+    pub fn get_html(&self) -> Html {
+        let div = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .create_element("div")
+            .unwrap();
+        div.set_inner_html(&self.art.to_string());
+        let node = WebNode::from(div);
+        VNode::VRef(node)
+    }
+}
+
+pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<SpotsArt, CreateError> {
     if spots.get_num_spots() == 0 {
         return Err(CreateError { msg: "The number of spots cannot be 0." })
     }
@@ -109,7 +136,7 @@ pub fn create(spots: Spots, dimension: usize, margin: f32) -> Result<String, Cre
         .set("width", "100%")
         .set("height", "100%")
         .add(circles);
-    Ok(art_piece.to_string())
+    Ok(SpotsArt::new(art_piece))
 }
 
 fn rand_num() -> f32 {
@@ -117,7 +144,7 @@ fn rand_num() -> f32 {
     rng.gen_range(0.0..1.0)
 }
 
-pub fn create_random_spot(num_spots: usize, dimension: usize, margin: f32) -> Result<String, CreateError> {
+pub fn create_random_spot(num_spots: usize, dimension: usize, margin: f32) -> Result<SpotsArt, CreateError> {
     let mut spots_vec = Vec::new();
     for _ in 0..num_spots {
         spots_vec.push(Spot {

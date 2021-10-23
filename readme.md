@@ -4,10 +4,19 @@
 
 Git pull this repository.
 
+Install Trunk within root directory of project with:
+
+`cargo install trunk wasm-bindgen-cli`
+
+Add wasm Rust Compiler Target:
+
+`rustup target add wasm32-unknown-unknown`
+
 ## Run
 
-`cargo run` in root folder. Then visit with web browser `127.0.0.1:8080`. Each get call to `127.0.0.1:8080` will 
-generate a new art piece. Terminal will output messages.
+`trunk serve` in root folder. Default browser window will auto-open a tab to `127.0.0.1:8080`.
+
+Each refresh will create a new random spot artwork.
 
 ## Modify
 

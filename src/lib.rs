@@ -1,7 +1,7 @@
 //! The library for the `spot` NFT project. Documentation to follow.
 
 pub mod svg_builder;
-pub mod spot_web;
+pub mod app;
 
 #[cfg(test)]
 mod tests {

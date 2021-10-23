@@ -1,13 +1,6 @@
 mod svg_builder;
-mod spot_web;
+mod app;
 
-use std::io;
-
-use spot_web::start;
-
-
-
-#[actix_web::main]
-async fn main() -> io::Result<()> {
-    start().await
+fn main() {
+    app::start();
 }

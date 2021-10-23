@@ -1,4 +1,5 @@
 /target
 /.idea
+/src/app/dist
 Cargo.lock
 art.svg
