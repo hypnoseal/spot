@@ -2,6 +2,7 @@
 
 pub mod svg_builder;
 pub mod app;
+pub mod spots;
 
 #[cfg(test)]
 mod tests {
