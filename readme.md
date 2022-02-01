@@ -1,4 +1,4 @@
-# SPOT NFT Generator
+# SPOT Generator
 
 ## Install
 
